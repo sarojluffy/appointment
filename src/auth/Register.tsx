@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addauth } from "../Redux/slices/authslice";
-import { green, blue, borderL } from "../shared/Buttonstyle";
+import { blue, borderL } from "../shared/Buttonstyle";
 
 type Props = {
   email: string;
@@ -22,8 +22,6 @@ const Register = () => {
   const { errors } = formState;
 
   const submitt = (data: Props) => {
-    // console.log(data);
-    // alert("registered");
     dispatch(addauth(data));
     navigate("/login", { replace: true });
   };

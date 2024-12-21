@@ -2,11 +2,11 @@ import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import { useNavigate } from "react-router-dom";
 
-import { useDispatch, UseDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux/store";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { addlog } from "../Redux/slices/Loggedinslice";
-import { green, blue, borderL, Outsideborder } from "../shared/Buttonstyle";
+import { green, blue, borderL } from "../shared/Buttonstyle";
 
 type Props = {
   email: string;

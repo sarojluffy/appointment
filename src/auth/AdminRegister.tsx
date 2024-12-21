@@ -2,9 +2,9 @@ import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import { useNavigate } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { green, blue, borderL, Outsideborder } from "../shared/Buttonstyle";
+import { green, borderL, Outsideborder } from "../shared/Buttonstyle";
 
 import { addauthadmin } from "../Redux/slices/authAdmin";
 

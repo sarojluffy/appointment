@@ -1,13 +1,10 @@
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-import { replace, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux/store";
 import { green, blue, borderL, Outsideborder } from "../shared/Buttonstyle";
-
-import { useEffect, useState } from "react";
-import { addlog } from "../Redux/slices/Loggedinslice";
 
 import { addauthadmin } from "../Redux/slices/authAdmin";
 
@@ -22,8 +19,6 @@ const Adminlogin = ({ setautheticatedadmin }: prop) => {
   const selector = useSelector(
     (state: RootState) => state.admin.existingadmins
   );
-
-  //   const [emailval, setemailval] = useState<string>("");
 
   const navigate = useNavigate();
 

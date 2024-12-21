@@ -1,7 +1,7 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { addbooked } from "../Redux/slices/Bookedslice";
 import { useDispatch, useSelector } from "react-redux";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Outsideborder } from "../shared/Buttonstyle";
 import { RootState } from "../Redux/store";
 import { useState } from "react";
@@ -9,7 +9,6 @@ type Props = {
   petsName: string;
   issue: string;
 
-  // email: string;
   dob: string;
 };
 
@@ -17,7 +16,6 @@ const Home = () => {
   const params = useParams();
   const paramsid = params.id;
   const selector = useSelector((state: RootState) => state.book.bookedpeople);
-  const navigate = useNavigate();
   const [Bookedd, setBookedd] = useState<boolean>(false);
   const [edit, setedit] = useState<boolean>(false);
 
@@ -29,10 +27,9 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const submitt = (data: Props) => {
-    const formatteddob = new Date(data.dob).toDateString(); // "Thu Dec 19 2024"
+    const formatteddob = new Date(data.dob).toDateString();
 
     dispatch(addbooked({ ...data, paramsid, dob: formatteddob }));
-    // navigate(`/subdetails/${paramsid}`);
 
     setBookedd(true);
     setedit(true);
@@ -42,7 +39,7 @@ const Home = () => {
   const form = useForm<Props>({
     defaultValues: { petsName: pett, issue: iss, dob: dt },
   });
-  const { handleSubmit, register, control, formState } = form;
+  const { handleSubmit, register, formState } = form;
   const { errors } = formState;
 
   return (

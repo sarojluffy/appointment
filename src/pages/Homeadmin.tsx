@@ -1,14 +1,11 @@
 import { useDispatch, useSelector, UseSelector } from "react-redux";
 import { RootState } from "../Redux/store";
 import { searchbooked } from "../Redux/slices/Bookedslice";
-import { borderL, Outsideborder } from "../shared/Buttonstyle";
+import { borderL } from "../shared/Buttonstyle";
 import { deletebooked } from "../Redux/slices/Bookedslice";
 import { useEffect, useState } from "react";
 
-import { Dispatch } from "@reduxjs/toolkit";
-type Props = {};
-
-const Homeadmin = (props: Props) => {
+const Homeadmin = () => {
   const selector = useSelector((state: RootState) => state.book.bookedpeople);
   const selector2 = useSelector(
     (state: RootState) => state.book.searchedbookedpeople
@@ -16,18 +13,13 @@ const Homeadmin = (props: Props) => {
   const dispatch = useDispatch();
 
   const [searchval, setsearchval] = useState<string>("");
-  // console.log(searchval);
-
-  // console.log(selector);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      // console.log("Dispatching search query:", inputfielddtaa);
       dispatch(searchbooked(searchval));
-    }, 600); // Debounce timeout of 300ms
+    }, 600);
 
     return () => {
-      // Clear timeout when the component unmounts or before the effect re-runs
       clearTimeout(timeoutId);
     };
   }, [searchval]);
@@ -38,12 +30,6 @@ const Homeadmin = (props: Props) => {
     dispatch(deletebooked(val));
   };
 
-  // const Search = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setsearchval(e.target.value);
-  //   dispatch(searchbooked(searchval));
-  // };
-
-  // console.log(selector);
   return (
     <>
       <div className="w-full mt-10">

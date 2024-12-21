@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
-type Props = {};
 
-const Main = (props: Props) => {
+const Main = () => {
   const navigate = useNavigate();
   return (
     <>

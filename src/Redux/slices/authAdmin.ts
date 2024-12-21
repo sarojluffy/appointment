@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface AuthadminItems {
   email: string;
@@ -22,7 +21,6 @@ export const authadminSlice = createSlice({
       const pw = action.payload.password;
       const objectData = state.existingadmins.find((abc) => abc.email === em);
 
-      //   console.log(objectData)
       if (objectData) {
         console.log("already exists");
       } else {
@@ -35,7 +33,6 @@ export const authadminSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { addauthadmin } = authadminSlice.actions;
 
 export default authadminSlice.reducer;

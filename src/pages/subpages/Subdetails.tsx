@@ -1,11 +1,9 @@
-import { useSelector, UseSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/store";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Outsideborder } from "../../shared/Buttonstyle";
 
-type Props = {};
-
-const Subdetails = (props: Props) => {
+const Subdetails = () => {
   const selector = useSelector((state: RootState) => state.book.bookedpeople);
 
   const ParamsUser = useParams().user;
