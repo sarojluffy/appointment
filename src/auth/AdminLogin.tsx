@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-import { useNavigate } from "react-router-dom";
+import { replace, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux/store";
@@ -15,8 +15,10 @@ type Props = {
   email: string;
   password: string;
 };
-
-const Adminlogin = () => {
+type prop = {
+  setautheticatedadmin: React.Dispatch<React.SetStateAction<boolean>>;
+};
+const Adminlogin = ({ setautheticatedadmin }: prop) => {
   const selector = useSelector(
     (state: RootState) => state.admin.existingadmins
   );
@@ -39,7 +41,8 @@ const Adminlogin = () => {
 
     if (emailVAl && pwVAl) {
       console.log(emailVAl);
-      navigate("/homeadmin");
+      setautheticatedadmin(true);
+      navigate("/homeadmin", { replace: true });
     } else {
       console.log("not found");
     }

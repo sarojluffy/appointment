@@ -12,8 +12,11 @@ type Props = {
   email: string;
   password: string;
 };
+type prop = {
+  setautheticated: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const Login = () => {
+const Login = ({ setautheticated }: prop) => {
   const selector = useSelector((state: RootState) => state.auth.existing);
 
   // console.log(selector);
@@ -39,6 +42,7 @@ const Login = () => {
       console.log(emailval);
 
       navigate(`/home/${emailVAl.email}`, { replace: true });
+      setautheticated(true);
     } else {
       setemailval("email or pw doesnt match");
     }
@@ -55,7 +59,7 @@ const Login = () => {
             noValidate
             onSubmit={handleSubmit(submitt, onError)}
           >
-            <p>{emailval}</p>
+            <p className="text-red-400">{emailval}</p>
 
             <label htmlFor="email">email</label>
             <input

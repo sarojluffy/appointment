@@ -94,19 +94,25 @@ const Home = () => {
                     },
                     valueAsDate: true,
                   })}
-                  // disabled={edit}
+                  disabled={edit}
                 ></input>
                 <p className="text-red-400">{errors.dob?.message}</p>
               </div>
-
-              <div className="mt-10">
-                <button
-                  type="submit"
-                  className="bg-green-500 rounded-md py-1 text-white px-2"
-                >
-                  book an appointment
-                </button>
-              </div>
+              {!Bookedd ? (
+                <>
+                  {" "}
+                  <div className="mt-10">
+                    <button
+                      type="submit"
+                      className="bg-green-500 rounded-md py-1 text-white px-2"
+                    >
+                      book an appointment
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
             </form>
 
             {Bookedd && edit ? (
