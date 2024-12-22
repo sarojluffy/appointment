@@ -7,16 +7,18 @@ import { RootState } from "../Redux/store";
 import { useState } from "react";
 import { addlog } from "../Redux/slices/Loggedinslice";
 import { green, blue, borderL } from "../shared/Buttonstyle";
+import { logged, currentuser } from "../Redux/slices/Loggedinslice";
 
 type Props = {
   email: string;
   password: string;
+  isactive: boolean;
 };
-type prop = {
-  setautheticated: React.Dispatch<React.SetStateAction<boolean>>;
-};
+// type prop = {
+//   setautheticated: React.Dispatch<React.SetStateAction<boolean>>;
+// };
 
-const Login = ({ setautheticated }: prop) => {
+const Login = () => {
   const selector = useSelector((state: RootState) => state.auth.existing);
 
   // console.log(selector);
@@ -38,11 +40,12 @@ const Login = ({ setautheticated }: prop) => {
     console.log("emailVAl:", emailVAl);
     console.log("pwVAl:", pwVAl);
     if (emailVAl && pwVAl) {
-      dispatch(addlog(data));
+      dispatch(addlog({ ...data, isactive: true }));
+      dispatch(currentuser(emailVAl.email));
       console.log(emailval);
 
       navigate(`/home/${emailVAl.email}`, { replace: true });
-      setautheticated(true);
+      // setautheticated(true);
     } else {
       setemailval("email or pw doesnt match");
     }

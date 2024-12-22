@@ -1,4 +1,4 @@
-import { useDispatch, useSelector, UseSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux/store";
 import { searchbooked } from "../Redux/slices/Bookedslice";
 import { borderL } from "../shared/Buttonstyle";

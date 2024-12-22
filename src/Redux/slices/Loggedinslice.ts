@@ -1,5 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 export interface Logitems {
   email: string;
@@ -8,9 +7,17 @@ export interface Logitems {
 
 export interface logstate {
   active: Logitems[];
+  adminactive: boolean;
+  bookedD: boolean;
+  editt: boolean;
+  currentActiveUser: string;
 }
+
 const initialState: logstate = {
   active: [],
+  adminactive: false,
+  bookedD: false,
+  editt: false,
 };
 
 export const LogSlice = createSlice({
@@ -20,6 +27,10 @@ export const LogSlice = createSlice({
     addlog: (state, action) => {
       const em = action.payload.email;
       const pw = action.payload.password;
+      const ac = action.payload.isactive;
+
+      console.log(ac);
+
       const objectData = state.active.find((abc) => abc.email === em);
 
       //   console.log(objectData)
@@ -32,10 +43,29 @@ export const LogSlice = createSlice({
         });
       }
     },
+
+    bookedinlog: (state, action) => {
+      state.bookedD = action.payload;
+    },
+    editinlog: (state, action) => {
+      state.editt = action.payload;
+    },
+    currentuser: (state, action) => {
+      state.currentActiveUser = action.payload;
+
+      // console.log(state.currentActiveUser)
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addlog } = LogSlice.actions;
+export const {
+  addlog,
+  logged,
+  adminlogged,
+  bookedinlog,
+  editinlog,
+  currentuser,
+} = LogSlice.actions;
 
 export default LogSlice.reducer;

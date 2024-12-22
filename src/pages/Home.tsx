@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Outsideborder } from "../shared/Buttonstyle";
 import { RootState } from "../Redux/store";
+import { bookedinlog, editinlog } from "../Redux/slices/Loggedinslice";
 import { useState } from "react";
 type Props = {
   petsName: string;
@@ -16,8 +17,11 @@ const Home = () => {
   const params = useParams();
   const paramsid = params.id;
   const selector = useSelector((state: RootState) => state.book.bookedpeople);
-  const [Bookedd, setBookedd] = useState<boolean>(false);
-  const [edit, setedit] = useState<boolean>(false);
+
+  const Bookedd = useSelector((state: RootState) => state.log.bookedD);
+  const edit = useSelector((state: RootState) => state.log.editt);
+  // const [Bookedd, setBookedd] = useState<boolean>(false);
+  // const [edit, setedit] = useState<boolean>(false);
 
   const match = selector.find((abc) => abc.email === paramsid);
   const pett = match?.pet;
@@ -31,8 +35,8 @@ const Home = () => {
 
     dispatch(addbooked({ ...data, paramsid, dob: formatteddob }));
 
-    setBookedd(true);
-    setedit(true);
+    dispatch(bookedinlog(true));
+    dispatch(editinlog(true));
   };
   const error = () => {};
 
@@ -95,7 +99,7 @@ const Home = () => {
                 ></input>
                 <p className="text-red-400">{errors.dob?.message}</p>
               </div>
-              {!Bookedd ? (
+              {Bookedd ? (
                 <>
                   {" "}
                   <div className="mt-10">
@@ -125,7 +129,7 @@ const Home = () => {
                   <p
                     className="underline mt-2"
                     onClick={() => {
-                      setedit(!edit);
+                      dispatch(editinlog(false));
                     }}
                   >
                     edit details

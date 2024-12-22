@@ -1,21 +1,20 @@
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import { useNavigate } from "react-router-dom";
-
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux/store";
 import { green, blue, borderL, Outsideborder } from "../shared/Buttonstyle";
-
 import { addauthadmin } from "../Redux/slices/authAdmin";
+import { adminlogged } from "../Redux/slices/Loggedinslice";
 
 type Props = {
   email: string;
   password: string;
 };
-type prop = {
-  setautheticatedadmin: React.Dispatch<React.SetStateAction<boolean>>;
-};
-const Adminlogin = ({ setautheticatedadmin }: prop) => {
+// type prop = {
+//   setautheticatedadmin: React.Dispatch<React.SetStateAction<boolean>>;
+// };
+const Adminlogin = () => {
   const selector = useSelector(
     (state: RootState) => state.admin.existingadmins
   );
@@ -36,7 +35,8 @@ const Adminlogin = ({ setautheticatedadmin }: prop) => {
 
     if (emailVAl && pwVAl) {
       console.log(emailVAl);
-      setautheticatedadmin(true);
+      // setautheticatedadmin(true);
+      dispatch(adminlogged(true));
       navigate("/homeadmin", { replace: true });
     } else {
       console.log("not found");
