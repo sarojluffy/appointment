@@ -33,6 +33,8 @@ const Adminlogin = () => {
     const emailVAl = selector.find((abc) => abc.email === data.email);
     const pwVAl = selector.find((abc) => abc.password === data.password);
 
+    console.log(emailVAl);
+
     if (emailVAl && pwVAl) {
       console.log(emailVAl);
       // setautheticatedadmin(true);

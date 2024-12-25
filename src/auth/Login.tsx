@@ -37,15 +37,13 @@ const Login = () => {
   const submitt = (data: Props) => {
     const emailVAl = selector.find((abc) => abc.email === data.email);
     const pwVAl = selector.find((abc) => abc.password === data.password);
-    console.log("emailVAl:", emailVAl);
-    console.log("pwVAl:", pwVAl);
+    console.log(data);
+
     if (emailVAl && pwVAl) {
       dispatch(addlog({ ...data, isactive: true }));
       dispatch(currentuser(emailVAl.email));
-      console.log(emailval);
 
       navigate(`/home/${emailVAl.email}`, { replace: true });
-      // setautheticated(true);
     } else {
       setemailval("email or pw doesnt match");
     }

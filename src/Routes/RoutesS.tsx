@@ -20,7 +20,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../Redux/store";
 
 const RoutesS = () => {
-  const loc = useLocation().pathname.split("/")[2];
+  const loc = useLocation().pathname.split("/")[2] || null;
 
   console.log(loc);
 

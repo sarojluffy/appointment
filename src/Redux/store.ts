@@ -3,6 +3,7 @@ import addauth from "./slices/authslice";
 import loggedd from "./slices/Loggedinslice";
 import booked from "./slices/Bookedslice";
 import authadmin from "./slices/authAdmin";
+import appointment from "./slices/AppointmentSlice";
 
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -10,7 +11,7 @@ import storage from "redux-persist/lib/storage";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "log", "book", "admin"],
+  whitelist: ["auth", "log", "book", "admin", "appoint"],
 };
 
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   log: loggedd,
   book: booked,
   admin: authadmin,
+  appoint: appointment,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({

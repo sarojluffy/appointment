@@ -1,29 +1,54 @@
 import { useParams } from "react-router-dom";
-import { addbooked } from "../Redux/slices/Bookedslice";
+import { addbooked, clicked } from "../Redux/slices/Bookedslice";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Outsideborder } from "../shared/Buttonstyle";
 import { RootState } from "../Redux/store";
-import { bookedinlog, editinlog } from "../Redux/slices/Loggedinslice";
+import { Timealloted } from "../Redux/slices/AppointmentSlice";
 import { useState } from "react";
+import { Getday } from "../Redux/slices/AppointmentSlice";
 type Props = {
   petsName: string;
   issue: string;
 
-  dob: string;
+  dob: number;
+  activa: boolean;
 };
+
+type tim = {
+  t: string;
+  active: boolean;
+}[];
+
+interface Daytime {
+  id: number;
+  t: string;
+  i: number;
+}
 
 const Home = () => {
   const params = useParams();
   const paramsid = params.id;
   const selector = useSelector((state: RootState) => state.book.bookedpeople);
+  const [choose, setchoose] = useState<boolean>(false);
+  const [DayTime, setDayTime] = useState<Daytime>();
 
-  const Bookedd = useSelector((state: RootState) => state.log.bookedD);
-  const edit = useSelector((state: RootState) => state.log.editt);
-  // const [Bookedd, setBookedd] = useState<boolean>(false);
-  // const [edit, setedit] = useState<boolean>(false);
+  // const [OnchaangeofCalendar, setOnchaangeofCalendar] = useState();
+
+  // const selector2 = useSelector(
+  //   (state: RootState) => state.appoint.dayappointment
+  // );
+
+  // const { id, day, time } = selector2[0];
+
+  // const Datamap = selector2[0].time;
+  // console.log(Datamap);
+
+  // console.log(selector2[0].time, "hi");
 
   const match = selector.find((abc) => abc.email === paramsid);
+
+  const edit = match?.activa;
   const pett = match?.pet;
   const iss = match?.issue;
   const dt = match?.dob;
@@ -31,12 +56,10 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const submitt = (data: Props) => {
-    const formatteddob = new Date(data.dob).toDateString();
+    const Datee = +new Date(data.dob);
 
-    dispatch(addbooked({ ...data, paramsid, dob: formatteddob }));
-
-    dispatch(bookedinlog(true));
-    dispatch(editinlog(true));
+    dispatch(addbooked({ ...data, paramsid, dob: Datee, activa: true }));
+    // dispatch(Timealloted(DayTime));
   };
   const error = () => {};
 
@@ -82,28 +105,49 @@ const Home = () => {
                 ></textarea>
                 <p className="text-red-400">{errors.issue?.message}</p>
               </div>
-              <div className="flex flex-col w-2/3 py-4 ">
+              <div className="flex flex-col w-1/3 py-4 ">
                 <label htmlFor="dob">pick your date </label>
                 <input
-                  className="border border-slate-500"
+                  className="border border-slate-500 "
                   type="date"
                   id="dob"
+                  // onClick={}
+                  // max="2024-12-28"
+                  // min="min"
                   {...register("dob", {
                     required: {
                       value: true,
                       message: "dob is required",
                     },
+
                     valueAsDate: true,
+                    onChange: (e) => {},
                   })}
                   disabled={edit}
                 ></input>
                 <p className="text-red-400">{errors.dob?.message}</p>
               </div>
-              {Bookedd ? (
+
+              <div>
+                {!edit ? (
+                  <>
+                    <div
+                      onClick={() => {
+                        setchoose(true);
+                      }}
+                    >
+                      Choose time
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </div>
+              {!edit ? (
                 <>
-                  {" "}
                   <div className="mt-10">
                     <button
+                      // disabled={true}
                       type="submit"
                       className="bg-green-500 rounded-md py-1 text-white px-2"
                     >
@@ -116,7 +160,7 @@ const Home = () => {
               )}
             </form>
 
-            {Bookedd && edit ? (
+            {edit ? (
               <>
                 <div className={`${Outsideborder}w-full mt-4 py-3 px-1`}>
                   <h1 className="font-semibold">Details submitted</h1>
@@ -129,7 +173,7 @@ const Home = () => {
                   <p
                     className="underline mt-2"
                     onClick={() => {
-                      dispatch(editinlog(false));
+                      dispatch(clicked(paramsid));
                     }}
                   >
                     edit details
@@ -139,6 +183,7 @@ const Home = () => {
             ) : null}
           </div>
         </div>
+        {/* <Try /> */}
       </div>
     </>
   );

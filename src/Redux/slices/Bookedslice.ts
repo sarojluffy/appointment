@@ -4,7 +4,8 @@ export interface Booked {
   email: string;
   pet: string;
   issue: string;
-  dob: string;
+  dob: number;
+  activa: boolean;
 }
 
 export interface Bookedstate {
@@ -20,6 +21,13 @@ export const BookedSlice = createSlice({
   name: "booked",
   initialState,
   reducers: {
+    clicked: (state, action) => {
+      const em = action.payload;
+      const objectData = state.bookedpeople.find((abc) => abc.email === em);
+      if (objectData) {
+        objectData.activa = false;
+      }
+    },
     addbooked: (state, action) => {
       // console.log(state.bookedpeople);
 
@@ -27,8 +35,13 @@ export const BookedSlice = createSlice({
       const pe = action.payload.petsName;
       const is = action.payload.issue;
       const dt = action.payload.dob;
+      const ac = action.payload.activa;
+      const date = new Date(dt);
 
-      console.log(dt);
+      console.log(date.getDay());
+
+      // console.log(dt);
+
       const objectData = state.bookedpeople.find((abc) => abc.email === em);
 
       // console.log(objectData);
@@ -37,6 +50,7 @@ export const BookedSlice = createSlice({
         objectData.pet = pe;
         objectData.issue = is;
         objectData.dob = dt;
+        objectData.activa = ac;
       } else {
         // console.log("not found");
         state.bookedpeople.push({
@@ -44,6 +58,7 @@ export const BookedSlice = createSlice({
           pet: pe,
           issue: is,
           dob: dt,
+          activa: ac,
         });
       }
     },
@@ -71,6 +86,7 @@ export const BookedSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addbooked, deletebooked, searchbooked } = BookedSlice.actions;
+export const { addbooked, deletebooked, searchbooked, clicked } =
+  BookedSlice.actions;
 
 export default BookedSlice.reducer;
