@@ -7,29 +7,20 @@ export interface Appointitems {
   day: string;
   time: { t: string; active: boolean }[];
 }
+// export interface AppointDay {
+//   t: string;
+//   active: boolean;
+// }
 
 export interface Appointstate {
   appointment: Appointitems[];
-  dayappointment: Appointitems[];
+  dayappointment: { t: string; active: boolean }[];
+  day: string;
 }
 const initialState: Appointstate = {
   appointment: AppointmentDay,
-  dayappointment: [
-    // {
-    //   id: 0,
-    //   day: "sunday",
-    //   time: [
-    //     { t: "10 am", active: false },
-    //     { t: "11 am", active: false },
-    //     { t: "12 am", active: false },
-    //     { t: "01 pm", active: false },
-    //     { t: "02 pm", active: false },
-    //     { t: "03 pm", active: false },
-    //     { t: "04 pm", active: false },
-    //     { t: "05 pm", active: false },
-    //   ],
-    // },
-  ],
+  dayappointment: [{ t: "", active: false }],
+  day: "",
 };
 
 export const appointSlice = createSlice({
@@ -37,31 +28,35 @@ export const appointSlice = createSlice({
   initialState,
   reducers: {
     Getday: (state, action) => {
-      console.log("called");
-      const dt = new Date(action.payload);
+      if (action.payload) {
+        // console.log(action.payload);
 
-      const dtt = dt.getDay();
+        // console.log(state.appointment);
+        const Day = new Date(action.payload).getDay();
+        console.log(Day);
 
-      // console.log(dtt);
+        const TimeDay = state.appointment.find((abc) => abc.id === Day);
+        console.log(JSON.parse(JSON.stringify(TimeDay)).time);
 
-      const findday: Appointitems | undefined = state.appointment.find(
-        (abc) => abc.id === dtt
-      );
-
-      if (findday) {
-        state.dayappointment = [findday];
+        if (TimeDay) {
+          state.dayappointment = TimeDay?.time;
+          state.day = TimeDay.day;
+        } else state.dayappointment = [{ t: "", active: false }];
+        // console.log(TimeDay?.time);
       }
-
-      console.log(state.dayappointment, "getday data");
     },
 
-    Timealloted: (state, action) => {
-      console.log("called");
+    SetTrue: (state, action) => {
+      console.log(action.payload);
     },
+
+    // Timealloted: (state, action) => {
+    //   console.log("called");
+    // },
   },
 });
 
-export const { DisplayAppointment, Getday, dataaa, Timealloted } =
+export const { DisplayAppointment, Getday, dataaa, Timealloted, SetTrue } =
   appointSlice.actions;
 
 export default appointSlice.reducer;

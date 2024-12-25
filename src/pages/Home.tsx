@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Outsideborder } from "../shared/Buttonstyle";
 import { RootState } from "../Redux/store";
-import { Timealloted } from "../Redux/slices/AppointmentSlice";
 import { useState } from "react";
 import { Getday } from "../Redux/slices/AppointmentSlice";
+import { SetTrue } from "../Redux/slices/AppointmentSlice";
+
 type Props = {
   petsName: string;
   issue: string;
@@ -30,22 +31,9 @@ const Home = () => {
   const params = useParams();
   const paramsid = params.id;
   const selector = useSelector((state: RootState) => state.book.bookedpeople);
-  const [choose, setchoose] = useState<boolean>(false);
-  const [DayTime, setDayTime] = useState<Daytime>();
-
-  // const [OnchaangeofCalendar, setOnchaangeofCalendar] = useState();
-
-  // const selector2 = useSelector(
-  //   (state: RootState) => state.appoint.dayappointment
-  // );
-
-  // const { id, day, time } = selector2[0];
-
-  // const Datamap = selector2[0].time;
-  // console.log(Datamap);
-
-  // console.log(selector2[0].time, "hi");
-
+  const AppTime = useSelector(
+    (state: RootState) => state.appoint.dayappointment
+  );
   const match = selector.find((abc) => abc.email === paramsid);
 
   const edit = match?.activa;
@@ -54,12 +42,16 @@ const Home = () => {
   const dt = match?.dob;
 
   const dispatch = useDispatch();
+  const [TargetValue, setTargetValue] = useState<string | undefined>();
+  const [TimeClicked, setTimeClicked] = useState<string>();
+
+  // console.log(TargetValue);
 
   const submitt = (data: Props) => {
     const Datee = +new Date(data.dob);
 
     dispatch(addbooked({ ...data, paramsid, dob: Datee, activa: true }));
-    // dispatch(Timealloted(DayTime));
+    dispatch(SetTrue(TimeClicked));
   };
   const error = () => {};
 
@@ -121,7 +113,10 @@ const Home = () => {
                     },
 
                     valueAsDate: true,
-                    onChange: (e) => {},
+                    onChange: (e) => {
+                      // setTargetValue(e.target.value);
+                      dispatch(Getday(e.target.value));
+                    },
                   })}
                   disabled={edit}
                 ></input>
@@ -129,19 +124,20 @@ const Home = () => {
               </div>
 
               <div>
-                {!edit ? (
-                  <>
-                    <div
-                      onClick={() => {
-                        setchoose(true);
-                      }}
-                    >
-                      Choose time
-                    </div>
-                  </>
-                ) : (
-                  <></>
-                )}
+                <div className="flex gap-4">
+                  {AppTime.map((abc) => {
+                    return (
+                      <div
+                        onClick={() => {
+                          setTimeClicked(abc.t);
+                        }}
+                        key={abc.t}
+                      >
+                        {abc.t}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
               {!edit ? (
                 <>
