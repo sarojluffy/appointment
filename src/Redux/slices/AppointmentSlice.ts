@@ -28,35 +28,95 @@ export const appointSlice = createSlice({
   initialState,
   reducers: {
     Getday: (state, action) => {
+      console.log("getdaycalled");
       if (action.payload) {
-        // console.log(action.payload);
-
-        // console.log(state.appointment);
         const Day = new Date(action.payload).getDay();
-        console.log(Day);
 
         const TimeDay = state.appointment.find((abc) => abc.id === Day);
-        console.log(JSON.parse(JSON.stringify(TimeDay)).time);
 
         if (TimeDay) {
           state.dayappointment = TimeDay?.time;
           state.day = TimeDay.day;
         } else state.dayappointment = [{ t: "", active: false }];
-        // console.log(TimeDay?.time);
       }
     },
 
     SetTrue: (state, action) => {
-      console.log(action.payload);
+      console.log("setrue called");
+      console.log(action.payload, state.day);
+      const timeSelected: string = action.payload;
+
+      const dayy = state.day;
+
+      if (dayy && timeSelected) {
+        const FIlterObject = state.appointment.find((abc) => abc.day === dayy);
+
+        if (FIlterObject) {
+          // const filteredTime = FIlterObject.time.find(
+          //   (abc) => abc.t === timeSelected
+          const filteredTime = FIlterObject.time.map((abc) => {
+            if (abc.t === timeSelected) {
+              return { ...abc, active: true };
+            }
+            return abc;
+          });
+          state.appointment = state.appointment.map((abc) => {
+            if (abc.day === dayy) {
+              return { ...abc, time: filteredTime };
+            }
+            return abc;
+          });
+          // can also be done in a way below
+
+          // const filteredTime = FIlterObject.time.map((abc) => {
+          //   if (abc.t === timeSelected) {
+          //     abc.active = true; // Update the active property
+          //   }
+          //   return abc; // Always return the entire object
+          // });
+          console.log(filteredTime, "ok");
+          console.log(JSON.parse(JSON.stringify(filteredTime)), "ok");
+        } else {
+          console.log("filtereditem not found");
+        }
+
+        // console.log(FIlterObject);
+      } else {
+        console.log("select a date in calendar");
+      }
     },
 
-    // Timealloted: (state, action) => {
-    //   console.log("called");
-    // },
+    ResetDayData12: (state, action) => {
+      const Dayyy = action.payload;
+
+      const ObjectData = state.appointment.find((abc) => abc.day === Dayyy);
+
+      if (ObjectData) {
+        const ResetData = ObjectData.time.map((abc) => {
+          return { ...abc, active: false };
+        });
+
+        if (ResetData)
+          state.appointment = state.appointment.map((abc) => {
+            if (abc.day === Dayyy) {
+              return { ...abc, time: ResetData };
+            }
+            return abc;
+          });
+      } else {
+        console.log("no Object data for reset fopund");
+      }
+    },
   },
 });
 
-export const { DisplayAppointment, Getday, dataaa, Timealloted, SetTrue } =
-  appointSlice.actions;
+export const {
+  DisplayAppointment,
+  Getday,
+  dataaa,
+  Timealloted,
+  SetTrue,
+  ResetDayData12,
+} = appointSlice.actions;
 
 export default appointSlice.reducer;
