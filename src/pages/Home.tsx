@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { addbooked, clicked } from "../Redux/slices/Bookedslice";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { Outsideborder } from "../shared/Buttonstyle";
+import { blue, Outsideborder, red } from "../shared/Buttonstyle";
 import { RootState } from "../Redux/store";
 import { useEffect, useState } from "react";
 import { Getday, ResetDayData12 } from "../Redux/slices/AppointmentSlice";
@@ -14,6 +14,7 @@ type Props = {
 
   dob: number;
   activa: boolean;
+  bookedtime: string;
 };
 
 type tim = {
@@ -45,29 +46,56 @@ const Home = () => {
   const pett = match?.pet;
   const iss = match?.issue;
   const dt = match?.dob;
-
+  const btkk = match?.bookedtime;
+  const T = new Date(dt ?? Date.now()).toDateString();
+  const DefaultIndTime = new Date(T).toISOString().split("T")[0];
+  console.log(DefaultIndTime, "time");
   const dispatch = useDispatch();
-  const [TargetValue, setTargetValue] = useState<string | undefined>();
+
+  const [TimeSelected, setTimeSelected] = useState<boolean>(false);
+  console.log(TimeSelected, "i am ");
+  // console.log(T, "t");
+  // const [TargetValue, setTargetValue] = useState<string | undefined>();
   const [TimeClicked, setTimeClicked] = useState<string>();
   const [showtime, setshowtime] = useState<boolean>(false);
   const [minDate, setMinDate] = useState<string>("");
   const [maxDate, setMaxDate] = useState<string>("");
+  const [bookedit, seteditbook] = useState<boolean>(false);
 
+  const [TimeVals, setTimeVals] = useState<boolean>(false);
   // console.log(TargetValue);
 
-  const submitt = (data: Props) => {
-    const Datee = +new Date(data.dob);
-
-    dispatch(addbooked({ ...data, paramsid, dob: Datee, activa: true }));
-    dispatch(SetTrue(TimeClicked));
+  const Presubmit = () => {
     setshowtime(false);
+  };
+
+  const submitt = (data: Props) => {
+    if (TimeSelected) {
+      const Datee = +new Date(data.dob);
+
+      dispatch(SetTrue(TimeClicked));
+
+      dispatch(
+        addbooked({
+          ...data,
+          paramsid,
+          dob: Datee,
+          activa: true,
+          bookedtime: TimeClicked,
+        })
+      );
+
+      setshowtime(false);
+    } else {
+      alert("select a time ");
+    }
   };
   const error = () => {};
 
   const form = useForm<Props>({
-    defaultValues: { petsName: pett, issue: iss, dob: dt },
+    defaultValues: { petsName: pett, issue: iss },
   });
-  const { handleSubmit, register, formState } = form;
+  const { handleSubmit, register, formState, trigger } = form;
   const { errors } = formState;
   const weekdayNames = [
     "sunday",
@@ -89,9 +117,6 @@ const Home = () => {
       const DayArr = today.getDay();
 
       midnight.setHours(16, 53, 0, 0);
-      // console.log(midnight);
-      // console.log(today);
-      // console.log(midnight.getHours());
 
       const GetminDiff = midnight.getMinutes() - today.getMinutes();
       console.log(GetminDiff, "o");
@@ -111,7 +136,10 @@ const Home = () => {
     const updateDateRange = () => {
       const today = new Date(); // E.g., Today is 2024-12-25
       const nextWeek = new Date(today);
-      nextWeek.setDate(today.getDate() + 7); // E.g., Next week is 2024-01-01
+
+      console.log(today);
+      nextWeek.setDate(today.getDate() + 6); // E.g., Next week is 2024-01-01
+      console.log(nextWeek);
 
       setMinDate(formatDate(today)); // minDate: "2024-12-25"
       setMaxDate(formatDate(nextWeek)); // maxDate: "2024-01-01"
@@ -132,6 +160,21 @@ const Home = () => {
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []);
 
+  const handleValidation = async () => {
+    // Trigger validation for all fields
+    const isValid = await trigger();
+    console.log("Validation status:", isValid);
+
+    if (isValid) {
+      setshowtime(false);
+    } else {
+      console.log("Validation errors:", errors);
+      seteditbook(false);
+    }
+  };
+
+  // console.log(formatDate(minDate, maxDate);
+
   return (
     <>
       <div className="w-full my-9">
@@ -150,7 +193,7 @@ const Home = () => {
                   {...register("petsName", {
                     required: { value: true, message: "cant be empty" },
                   })}
-                  disabled={edit}
+                  disabled={edit || bookedit}
                 ></input>
                 <p className="text-red-400">{errors.petsName?.message}</p>
 
@@ -164,7 +207,7 @@ const Home = () => {
                   {...register("issue", {
                     required: { value: true, message: "cant be empty" },
                   })}
-                  disabled={edit}
+                  disabled={edit || bookedit}
                 ></textarea>
                 <p className="text-red-400">{errors.issue?.message}</p>
               </div>
@@ -187,31 +230,33 @@ const Home = () => {
                       // setTargetValue(e.target.value);
                       dispatch(Getday(e.target.value));
                       setshowtime(true);
+                      setTimeSelected(true);
+                      setTimeVals(true);
                     },
                   })}
-                  disabled={edit}
+                  disabled={edit || bookedit}
                 ></input>
                 <p className="text-red-400">{errors.dob?.message}</p>
               </div>
-
-              <div>
-                <div className="flex gap-4">
-                  {showtime ? (
-                    <>
-                      {" "}
+              {TimeVals ? (
+                <>
+                  <div>
+                    <div className="flex gap-4">
                       {AppTime.map((abc) => {
                         return (
                           <button
                             type="button"
-                            disabled={abc.active}
+                            // disabled={abc.active}
+                            disabled={abc.active || !TimeSelected}
                             className={`p-4 ${
                               abc.active
-                                ? "bg-blue-500 text-white"
-                                : "bg-gray-200 text-black"
-                            } hover:bg-red-300`}
+                                ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                                : "bg-blue-500 text-white hover:bg-blue-600"
+                            } `}
                             onClick={() => {
                               setTimeClicked(abc.t);
                               console.log("clicked");
+                              // setTimeSelected(abc.t);
                             }}
                             key={abc.t}
                           >
@@ -219,22 +264,27 @@ const Home = () => {
                           </button>
                         );
                       })}
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
 
-              {!edit ? (
+              {!edit && !bookedit ? (
                 <>
                   <div className="mt-10">
                     <button
+                      onClick={() => {
+                        handleValidation();
+                        seteditbook(true);
+                        setTimeVals(false);
+                      }}
                       // disabled={true}
-                      type="submit"
+                      type="button"
                       className="bg-green-500 rounded-md py-1 text-white px-2"
                     >
-                      book an appointment
+                      Book
                     </button>
                   </div>
                 </>
@@ -242,45 +292,73 @@ const Home = () => {
                 <></>
               )}
 
-              {/* {edit ? (
-                <>
+              <div className=" flex mt-14 gap-5">
+                <div>
                   {" "}
-                  <div>
-                    <h1>Verify your Details</h1>
+                  {!edit && !showtime && bookedit ? (
+                    <>
+                      {" "}
+                      <div>
+                        <div className="flex justify-between">
+                          <button
+                            type="button"
+                            className={`${blue} `}
+                            onClick={() => {
+                              dispatch(clicked(paramsid));
+                              seteditbook(false);
 
-                    <div>
-                      <p>User : {paramsid}</p>
-                      <p>Pet's name : {pett}</p>
-                      <p>Issue : {iss}</p>
-                      <p>Date Enquiry : {iss}</p>
-                    </div>
-                    <div className="flex justify-between">
-                      <button
-                        type="button"
-                        className="underline"
-                        onClick={() => {
-                          dispatch(clicked(paramsid));
-                        }}
-                      >
-                        edit details
-                      </button>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <></>
-              )} */}
+                              console.log("clicked");
+                            }}
+                          >
+                            edit details
+                          </button>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div>
+                  {" "}
+                  {!edit && !showtime && bookedit ? (
+                    <>
+                      <div className="">
+                        <button
+                          // disabled={true}
+                          type="submit"
+                          className="bg-green-500 rounded-md py-1 text-white px-2"
+                        >
+                          Confirm appointment
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </div>
             </form>
 
             {edit ? (
               <>
-                <div className={`${Outsideborder}w-full mt-4 py-3 px-1`}>
-                  <h1 className="font-semibold">Details submitted</h1>
+                <div
+                  className={`${Outsideborder}w-full mt-4 py-3 px-1 flex flex-col gap-4`}
+                >
+                  <div>
+                    <h1 className="font-semibold">Details submitted</h1>
 
-                  <p>User : {paramsid}</p>
-                  <p>Pet's name : {pett}</p>
-                  <p>Issue : {iss}</p>
-                  <p>Booked date : {dt}</p>
+                    <p>User : {paramsid}</p>
+                    <p>Pet's name : {pett}</p>
+                    <p>Issue : {iss}</p>
+                    <p>Booked date : {T}</p>
+                    <p>Booked Time : {btkk} </p>
+                  </div>
+                  <div>
+                    <button type="button" className={`${red}`}>
+                      Cancel
+                    </button>
+                  </div>
 
                   <p
                     className="underline mt-2"

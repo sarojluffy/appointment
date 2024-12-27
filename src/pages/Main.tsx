@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
+import Navbar from "../Components/Navbar";
 
 const Main = () => {
   const navigate = useNavigate();
   return (
     <>
       <div className="w-full">
+        <Navbar />
         <div className="w-5/6 mx-auto mt-32 space-x-5">
           <div className="py-7">Login as</div>
 

@@ -70,7 +70,11 @@ const Homeadmin = () => {
                           <span className="font-semibold">
                             appointment enquiry for :
                           </span>
-                          {abc.dob}
+                          {new Date(abc.dob ?? Date.now()).toDateString()}
+                        </p>
+                        <p>
+                          <span className="font-semibold">Time :</span> :
+                          {abc.bookedtime}
                         </p>
                       </div>
 

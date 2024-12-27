@@ -6,6 +6,7 @@ export interface Booked {
   issue: string;
   dob: number;
   activa: boolean;
+  bookedtime: string;
 }
 
 export interface Bookedstate {
@@ -29,13 +30,14 @@ export const BookedSlice = createSlice({
       }
     },
     addbooked: (state, action) => {
-      // console.log(state.bookedpeople);
+      // console.log(action.payload, "pt");
 
       const em = action.payload.paramsid;
       const pe = action.payload.petsName;
       const is = action.payload.issue;
       const dt = action.payload.dob;
       const ac = action.payload.activa;
+      const btk = action.payload.bookedtime;
       const date = new Date(dt);
 
       console.log(date.getDay());
@@ -51,6 +53,7 @@ export const BookedSlice = createSlice({
         objectData.issue = is;
         objectData.dob = dt;
         objectData.activa = ac;
+        objectData.bookedtime = btk;
       } else {
         // console.log("not found");
         state.bookedpeople.push({
@@ -59,6 +62,7 @@ export const BookedSlice = createSlice({
           issue: is,
           dob: dt,
           activa: ac,
+          bookedtime: btk,
         });
       }
     },

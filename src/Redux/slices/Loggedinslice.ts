@@ -12,6 +12,7 @@ export interface logstate {
   bookedD: boolean;
   editt: boolean;
   currentActiveUser: string;
+  book: boolean;
 }
 
 const initialState: logstate = {
@@ -20,6 +21,7 @@ const initialState: logstate = {
   bookedD: false,
   editt: false,
   currentActiveUser: "",
+  book: false,
 };
 
 export const LogSlice = createSlice({
@@ -30,6 +32,7 @@ export const LogSlice = createSlice({
       const em = action.payload.email;
       const pw = action.payload.password;
       const ac = action.payload.isactive;
+      // const bkt = action.payload.
 
       console.log(ac);
 
@@ -79,6 +82,10 @@ export const LogSlice = createSlice({
       state.currentActiveUser = action.payload;
 
       console.log(state.currentActiveUser);
+    },
+
+    booker: (state, action) => {
+      state.book = action.payload;
     },
     // testuser: (state) => {
     //   console.log(state.editt);
