@@ -12,10 +12,14 @@ export interface Booked {
 export interface Bookedstate {
   bookedpeople: Booked[];
   searchedbookedpeople: Booked[];
+  Usercancel: Booked[];
+  Bookedhistory: Booked[];
 }
 const initialState: Bookedstate = {
   bookedpeople: [],
   searchedbookedpeople: [],
+  Usercancel: [],
+  Bookedhistory: [],
 };
 
 export const BookedSlice = createSlice({
@@ -30,8 +34,7 @@ export const BookedSlice = createSlice({
       }
     },
     addbooked: (state, action) => {
-      // console.log(action.payload, "pt");
-
+      console.log(action.payload);
       const em = action.payload.paramsid;
       const pe = action.payload.petsName;
       const is = action.payload.issue;
@@ -42,11 +45,8 @@ export const BookedSlice = createSlice({
 
       console.log(date.getDay());
 
-      // console.log(dt);
-
       const objectData = state.bookedpeople.find((abc) => abc.email === em);
 
-      // console.log(objectData);
       if (objectData) {
         objectData.email = em;
         objectData.pet = pe;
@@ -55,8 +55,40 @@ export const BookedSlice = createSlice({
         objectData.activa = ac;
         objectData.bookedtime = btk;
       } else {
-        // console.log("not found");
         state.bookedpeople.push({
+          email: em,
+          pet: pe,
+          issue: is,
+          dob: dt,
+          activa: ac,
+          bookedtime: btk,
+        });
+      }
+    },
+
+    historybooked: (state, action) => {
+      console.log(action.payload);
+      const em = action.payload.paramsid;
+      const pe = action.payload.petsName;
+      const is = action.payload.issue;
+      const dt = action.payload.dob;
+      const ac = action.payload.activa;
+      const btk = action.payload.bookedtime;
+      const date = new Date(dt);
+
+      console.log(date.getDay());
+
+      const objectData = state.Bookedhistory.find((abc) => abc.email === em);
+
+      if (objectData) {
+        objectData.email = em;
+        objectData.pet = pe;
+        objectData.issue = is;
+        objectData.dob = dt;
+        objectData.activa = ac;
+        objectData.bookedtime = btk;
+      } else {
+        state.Bookedhistory.push({
           email: em,
           pet: pe,
           issue: is,
@@ -86,11 +118,56 @@ export const BookedSlice = createSlice({
         (abc) => abc.email != em
       );
     },
+
+    cancelbooked: (state, action) => {
+      console.log(action.payload, "ko");
+      const em = action.payload;
+      state.bookedpeople = state.bookedpeople.filter((abc) => abc.email != em);
+      console.log(state.bookedpeople);
+    },
+
+    canceledUsers: (state, action) => {
+      console.log("calledv here");
+      console.log(action.payload);
+      // const em = action.payload.paramsid;
+      // const pe = action.payload.petsName;
+      // const is = action.payload.issue;
+      // const dt = action.payload.dob;
+      // const ac = action.payload.activa;
+      // const btk = action.payload.bookedtime;
+      // const date = new Date(dt);
+      // console.log(em, pe, is, dt, ac, btk, date);
+
+      // console.log(em);
+
+      // console.log(date.getDay());
+
+      // const objectData = state.Bookedhistory.find((abc) => abc.email === em);
+
+      // if (objectData) {
+      //   state.Bookedhistory.push({
+      //     email: em,
+      //     pet: pe,
+      //     issue: is,
+      //     dob: dt,
+      //     activa: ac,
+      //     bookedtime: btk,
+      //   });
+      // } else {
+      //   alert("not found");
+      // }
+    },
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { addbooked, deletebooked, searchbooked, clicked } =
-  BookedSlice.actions;
+export const {
+  addbooked,
+  deletebooked,
+  searchbooked,
+  clicked,
+  cancelbooked,
+  canceledUsers,
+  historybooked,
+} = BookedSlice.actions;
 
 export default BookedSlice.reducer;

@@ -1,12 +1,13 @@
 import { useParams } from "react-router-dom";
-import { addbooked, clicked } from "../Redux/slices/Bookedslice";
+import { addbooked, clicked, historybooked } from "../Redux/slices/Bookedslice";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { blue, Outsideborder, red } from "../shared/Buttonstyle";
+import { blue, green, Outsideborder, red } from "../shared/Buttonstyle";
 import { RootState } from "../Redux/store";
 import { useEffect, useState } from "react";
 import { Getday, ResetDayData12 } from "../Redux/slices/AppointmentSlice";
 import { SetTrue } from "../Redux/slices/AppointmentSlice";
+import Modal from "./Modal";
 
 type Props = {
   petsName: string;
@@ -77,6 +78,15 @@ const Home = () => {
 
       dispatch(
         addbooked({
+          ...data,
+          paramsid,
+          dob: Datee,
+          activa: true,
+          bookedtime: TimeClicked,
+        })
+      );
+      dispatch(
+        historybooked({
           ...data,
           paramsid,
           dob: Datee,
@@ -282,9 +292,9 @@ const Home = () => {
                       }}
                       // disabled={true}
                       type="button"
-                      className="bg-green-500 rounded-md py-1 text-white px-2"
+                      className={`${green}`}
                     >
-                      Book
+                      Book Now
                     </button>
                   </div>
                 </>
@@ -327,7 +337,7 @@ const Home = () => {
                         <button
                           // disabled={true}
                           type="submit"
-                          className="bg-green-500 rounded-md py-1 text-white px-2"
+                          className={`${green}`}
                         >
                           Confirm appointment
                         </button>
@@ -355,9 +365,7 @@ const Home = () => {
                     <p>Booked Time : {btkk} </p>
                   </div>
                   <div>
-                    <button type="button" className={`${red}`}>
-                      Cancel
-                    </button>
+                    <Modal mail={paramsid}>Cancel</Modal>
                   </div>
 
                   <p
