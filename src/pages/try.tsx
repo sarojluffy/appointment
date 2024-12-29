@@ -1,7 +1,6 @@
 import { AppointmentDay } from "../shared/appointment";
-type Props = {};
 
-const Try = (props: Props) => {
+const Try = () => {
   return (
     <>
       <div>

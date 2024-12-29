@@ -81,13 +81,6 @@ export const BookedSlice = createSlice({
       const objectData = state.Bookedhistory.find((abc) => abc.email === em);
 
       if (objectData) {
-        objectData.email = em;
-        objectData.pet = pe;
-        objectData.issue = is;
-        objectData.dob = dt;
-        objectData.activa = ac;
-        objectData.bookedtime = btk;
-      } else {
         state.Bookedhistory.push({
           email: em,
           pet: pe,
@@ -96,6 +89,8 @@ export const BookedSlice = createSlice({
           activa: ac,
           bookedtime: btk,
         });
+      } else {
+        alert("cant add");
       }
     },
 
@@ -126,37 +121,36 @@ export const BookedSlice = createSlice({
       console.log(state.bookedpeople);
     },
 
-    canceledUsers: (state, action) => {
-      console.log("calledv here");
-      console.log(action.payload);
-      // const em = action.payload.paramsid;
-      // const pe = action.payload.petsName;
-      // const is = action.payload.issue;
-      // const dt = action.payload.dob;
-      // const ac = action.payload.activa;
-      // const btk = action.payload.bookedtime;
-      // const date = new Date(dt);
-      // console.log(em, pe, is, dt, ac, btk, date);
+    // canceledUsers: (state, action) => {
+    //   console.log(action.payload);
+    //   // const em = action.payload.paramsid;
+    //   // const pe = action.payload.petsName;
+    //   // const is = action.payload.issue;
+    //   // const dt = action.payload.dob;
+    //   // const ac = action.payload.activa;
+    //   // const btk = action.payload.bookedtime;
+    //   // const date = new Date(dt);
+    //   // console.log(em, pe, is, dt, ac, btk, date);
 
-      // console.log(em);
+    //   // console.log(em);
 
-      // console.log(date.getDay());
+    //   // console.log(date.getDay());
 
-      // const objectData = state.Bookedhistory.find((abc) => abc.email === em);
+    //   // const objectData = state.Bookedhistory.find((abc) => abc.email === em);
 
-      // if (objectData) {
-      //   state.Bookedhistory.push({
-      //     email: em,
-      //     pet: pe,
-      //     issue: is,
-      //     dob: dt,
-      //     activa: ac,
-      //     bookedtime: btk,
-      //   });
-      // } else {
-      //   alert("not found");
-      // }
-    },
+    //   // if (objectData) {
+    //   //   state.Bookedhistory.push({
+    //   //     email: em,
+    //   //     pet: pe,
+    //   //     issue: is,
+    //   //     dob: dt,
+    //   //     activa: ac,
+    //   //     bookedtime: btk,
+    //   //   });
+    //   // } else {
+    //   //   alert("not found");
+    //   // }
+    // },
   },
 });
 
@@ -166,7 +160,7 @@ export const {
   searchbooked,
   clicked,
   cancelbooked,
-  canceledUsers,
+  // canceledUsers,
   historybooked,
 } = BookedSlice.actions;
 

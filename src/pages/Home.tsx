@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { addbooked, clicked, historybooked } from "../Redux/slices/Bookedslice";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { blue, green, Outsideborder, red } from "../shared/Buttonstyle";
+import { blue, green, Outsideborder } from "../shared/Buttonstyle";
 import { RootState } from "../Redux/store";
 import { useEffect, useState } from "react";
 import { Getday, ResetDayData12 } from "../Redux/slices/AppointmentSlice";
@@ -18,16 +18,16 @@ type Props = {
   bookedtime: string;
 };
 
-type tim = {
-  t: string;
-  active: boolean;
-}[];
+// type tim = {
+//   t: string;
+//   active: boolean;
+// }[];
 
-interface Daytime {
-  id: number;
-  t: string;
-  i: number;
-}
+// interface Daytime {
+//   id: number;
+//   t: string;
+//   i: number;
+// }
 
 const Home = () => {
   const params = useParams();
@@ -66,13 +66,15 @@ const Home = () => {
   const [TimeVals, setTimeVals] = useState<boolean>(false);
   // console.log(TargetValue);
 
-  const Presubmit = () => {
-    setshowtime(false);
-  };
+  // const Presubmit = () => {
+  //   setshowtime(false);
+  // };
 
   const submitt = (data: Props) => {
     if (TimeSelected) {
       const Datee = +new Date(data.dob);
+      // const DateNow = new Date();
+      console.log("right");
 
       dispatch(SetTrue(TimeClicked));
 
@@ -365,7 +367,13 @@ const Home = () => {
                     <p>Booked Time : {btkk} </p>
                   </div>
                   <div>
-                    <Modal mail={paramsid}>Cancel</Modal>
+                    <Modal
+                      mail={paramsid}
+
+                      // TimeClicked= {TimeClicked}
+                    >
+                      Cancel
+                    </Modal>
                   </div>
 
                   <p

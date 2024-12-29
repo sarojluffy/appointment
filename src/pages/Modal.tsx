@@ -7,7 +7,7 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import { blue, red } from "../shared/Buttonstyle";
 import { useDispatch } from "react-redux";
-import { cancelbooked, canceledUsers } from "../Redux/slices/Bookedslice";
+import { cancelbooked } from "../Redux/slices/Bookedslice";
 
 type props = {
   children: React.ReactNode;
@@ -32,8 +32,8 @@ export default function TransitionsModal({ children, mail }: props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const confirmM = async () => {
-    await dispatch(canceledUsers(mail));
+  const confirmM = () => {
+    // await dispatch(canceledUsers(mail));
     dispatch(cancelbooked(mail));
     handleClose();
     // window.location.reload();

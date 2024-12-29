@@ -7,7 +7,7 @@ import { RootState } from "../Redux/store";
 import { useState } from "react";
 import { addlog } from "../Redux/slices/Loggedinslice";
 import { green, blue, borderL } from "../shared/Buttonstyle";
-import { logged, currentuser } from "../Redux/slices/Loggedinslice";
+import { currentuser } from "../Redux/slices/Loggedinslice";
 
 type Props = {
   email: string;

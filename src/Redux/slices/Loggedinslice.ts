@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface Logitems {
   email: string;
@@ -96,7 +96,7 @@ export const LogSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const {
   addlog,
-  logged,
+  // logged,
   adminlogged,
   bookedinlog,
   editinlog,

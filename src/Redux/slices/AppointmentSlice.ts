@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AppointmentDay } from "../../shared/appointment";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 export interface Appointitems {
   id: number;
@@ -111,10 +111,10 @@ export const appointSlice = createSlice({
 });
 
 export const {
-  DisplayAppointment,
+  // DisplayAppointment,
   Getday,
-  dataaa,
-  Timealloted,
+  // dataaa,
+  // Timealloted,
   SetTrue,
   ResetDayData12,
 } = appointSlice.actions;

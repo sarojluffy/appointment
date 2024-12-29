@@ -1,11 +1,4 @@
-import { useState } from "react";
-import {
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-  useParams,
-} from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Login from "../auth/Login";
 import Register from "../auth/Register";
 import Home from "../pages/Home";
