@@ -3,10 +3,13 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 
 import { blue } from "../shared/Buttonstyle";
 import { useState } from "react";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
+import { RxCross2 } from "react-icons/rx";
+import { duration } from "@mui/material";
 
 const Navbar = () => {
   const [isHovered, setIshovered] = useState<boolean>(false);
+  const [isToogle, setIstoogle] = useState<boolean>(false);
 
   // const [LoginC, setLoginC] = useState<boolean>(false);
   const onEnter = () => {
@@ -39,7 +42,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="w-full ">
+      <div className="w-full flex justify-between">
         <div className="w-5/6 mx-auto py-4 flex justify-between items-center max-w-7xl  shadow-md px-3 rounded-md">
           {/* left nav */}
           <div className="">
@@ -47,8 +50,9 @@ const Navbar = () => {
           </div>
 
           {/* right nav */}
+
           <div className="w-full flex ml-3">
-            <div className="  items-center  w-full   justify-center gap-12 whitespace-nowrap hidden md:flex ">
+            <div className="  items-center  w-full   justify-center gap-6 whitespace-nowrap hidden md:flex ">
               <div className="cursor-pointer">Our Services</div>
               <div>Book Slots</div>
               <div>Pricing</div>
@@ -57,19 +61,16 @@ const Navbar = () => {
                 Contact Us
               </motion.div>
             </div>
-            <div className="md:hidden">
-              <CiMenuBurger size={32} />
-            </div>
 
-            <div className="w-2/3">
+            <div className="w-full flex justify-end items-center gap-8">
               <div className="flex justify-end items-center  gap-5 ">
-                <div className="hidden md:flex items-center">
+                <div className="flex items-center">
                   <motion.div
-                    className={`py-2 px-4  rounded-md  cursor-pointer  hover:transition ease-in-out duration-300 flex items-center relative group hover:text-primary `}
+                    className={`py-2 px-4 hidden md:flex rounded-md  cursor-pointer  hover:transition ease-in-out duration-300  items-center relative group hover:text-primary `}
                     onMouseEnter={onEnter}
                     onMouseLeave={onExit}
                   >
-                    <p className="whitespace-nowrap"> Log In </p>
+                    <p className="whitespace-nowrap "> Login </p>
                     <RiArrowDropDownLine
                       size={25}
                       className=" transform transition-transform group-hover:-rotate-180 ease-in-out duration-100 "
@@ -87,14 +88,14 @@ const Navbar = () => {
                     >
                       <motion.div
                         whileTap={{ scale: 0.9 }}
-                        whileHover={{ scale: 1.2 }}
+                        // whileHover={{ scale: 1.2 }}
                         className=" my-2 border-b-[1px] border-transparent hover:border-terinary transition ease-in"
                       >
                         Admin
                       </motion.div>
                       <motion.div
                         whileTap={{ scale: 0.9 }}
-                        whileHover={{ scale: 1.2 }}
+                        // whileHover={{ scale: 1.2 }}
                         className="pt-3 border-b-[1px] hover:border-terinary transition ease-in border-transparent"
                       >
                         User
@@ -111,11 +112,45 @@ const Navbar = () => {
                     </motion.button>
                   </div> */}
                   <motion.div whileTap={{ scale: 0.9 }}>
-                    <button className={`${blue}`}>Get Started</button>
+                    <button className={`${blue} hidden md:block`}>
+                      Get Started
+                    </button>
                   </motion.div>
                 </div>
-                <div className="md:hidden">
-                  <CiMenuBurger size={32} />
+              </div>
+              <div
+                className="flex "
+                onClick={() => {
+                  setIstoogle(!isToogle);
+                }}
+              >
+                <div
+                  className="md:hidden"
+                  onClick={() => setIstoogle(!isToogle)}
+                >
+                  {/* <AnimatePresence mode="wait"> */}
+                  {isToogle ? (
+                    <motion.div
+                      key="menu-c"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 2 }}
+                    >
+                      <RxCross2 size={32} />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="menu-o"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 2 }}
+                    >
+                      <CiMenuBurger size={32} />
+                    </motion.div>
+                  )}
+                  {/* </AnimatePresence> */}
                 </div>
               </div>
             </div>

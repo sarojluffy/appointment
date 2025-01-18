@@ -9,6 +9,12 @@ export default {
         terinary: "#004EBA", //darker
         quad: "#0B3558", //darkest
       },
+      screens: {
+        xs: "480px", // Extra small devices
+        md: "1080px",
+        "3xl": "1600px", // Extra large devices
+        "4k": "2560px", // 4K screens
+      },
     },
   },
   plugins: [],
