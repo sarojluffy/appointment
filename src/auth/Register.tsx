@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addauth } from "../Redux/slices/authslice";
 import { blue, borderL } from "../shared/Buttonstyle";
+import { ToastContainer, toast, Bounce } from 'react-toastify';
 
 type Props = {
   email: string;
@@ -23,50 +24,91 @@ const Register = () => {
 
   const submitt = (data: Props) => {
     dispatch(addauth(data));
-    navigate("/login", { replace: true });
+    toast.success("registered")
+    setTimeout(() => {
+
+      navigate("/login", { replace: true });
+    }, 2000);
+
   };
 
-  const onError = () => {};
+
+  const onError = () => { };
 
   return (
     <>
       <div className="w-full h-full">
-        <div className="w-5/6 mx-auto mt-32">
-          <form
-            className="flex flex-col w-2/4 mx-auto p-3 border-[1px] border-slate-400"
-            noValidate
-            onSubmit={handleSubmit(submitt, onError)}
-          >
-            <label htmlFor="email">email</label>
-            <input
-              className={`${borderL}`}
-              type="text"
-              {...register("email", {
-                required: { value: true, message: "Can't be empty" }, //value defines if the validation is on or off
-                pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, ///this is a different value
-                  message: "Invalid format",
-                },
-              })}
-            ></input>
-            <p className="text-red-400">{errors.email?.message}</p>
+        <div className="w-5/6 mx-auto mt-32 pb-8">
+          <div className="w-3/4 mx-auto">
 
-            <label htmlFor="password">password</label>
-            <input
-              className={`${borderL}`}
-              type="password"
-              {...register("password", {
-                required: { value: true, message: "cant be empty" },
-              })}
-            ></input>
+            <h1 className="  my-2 ml-3"> <span className="text-2xl font-semibold">Sign up</span>  </h1>
+            <form
+              className="flex flex-col  p-3 shadow-md"
+              noValidate
+              onSubmit={handleSubmit(submitt, onError)}
+            >
+              <label htmlFor="email" className=""></label>
+              <input
+                placeholder="Email"
+                className={`${borderL} px-2 py-1 text-sm`}
+                type="text"
+                {...register("email", {
+                  required: { value: true, message: "field can't be empty" }, //value defines if the validation is on or off
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, ///this is a different value
+                    message: "Invalid format",
+                  },
+                })}
+              ></input>
+              <p className="text-red-600 text-xs my-2 h-[20px]">{errors.email?.message}</p>
 
-            <p className="text-red-400">{errors.password?.message}</p>
+              <label htmlFor="password"></label>
+              <input
+                placeholder="Password"
+                className={`${borderL} px-2 py-1  text-sm`}
+                type="password"
+                {...register("password", {
+                  required: { value: true, message: "field can't be empty" },
+                })}
+              ></input>
 
-            <button type="submit" className={`${blue} mt-3`}>
-              register as user
-            </button>
-          </form>
+              <p className="text-red-600 text-xs my-2 h-[20px]">{errors.password?.message}</p>
+
+              <button type="submit" className={`${blue} mt-5`}>
+                Register
+              </button>
+              <ToastContainer position="top-left"
+                autoClose={5000}
+                hideProgressBar={true}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+                transition={Bounce}
+              />
+            </form>
+
+
+
+
+          </div>
+
           <DevTool control={control} />
+        </div>
+        <div className="flex justify-center  space-x-3 items-center">
+
+          <p className="text-xs">Got an account ?</p>
+          <button
+            className=" underline text-xs text-primary"
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
+            signin
+          </button>
         </div>
       </div>
     </>

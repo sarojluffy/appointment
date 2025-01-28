@@ -38,7 +38,7 @@ const Home = () => {
   );
   const TodayIs = useSelector((state: RootState) => state.appoint.day);
   if (TodayIs) {
-    console.log(TodayIs);
+    // console.log(TodayIs);
   }
 
   const match = selector.find((abc) => abc.email === paramsid);
@@ -50,11 +50,11 @@ const Home = () => {
   const btkk = match?.bookedtime;
   const T = new Date(dt ?? Date.now()).toDateString();
   const DefaultIndTime = new Date(T).toISOString().split("T")[0];
-  console.log(DefaultIndTime, "time");
+  // console.log(DefaultIndTime, "time");
   const dispatch = useDispatch();
 
   const [TimeSelected, setTimeSelected] = useState<boolean>(false);
-  console.log(TimeSelected, "i am ");
+  // console.log(TimeSelected, "i am ");
   // console.log(T, "t");
   // const [TargetValue, setTargetValue] = useState<string | undefined>();
   const [TimeClicked, setTimeClicked] = useState<string>();
@@ -74,7 +74,7 @@ const Home = () => {
     if (TimeSelected) {
       const Datee = +new Date(data.dob);
       // const DateNow = new Date();
-      console.log("right");
+      // console.log("right");
 
       dispatch(SetTrue(TimeClicked));
 
@@ -102,7 +102,7 @@ const Home = () => {
       alert("select a time ");
     }
   };
-  const error = () => {};
+  const error = () => { };
 
   const form = useForm<Props>({
     defaultValues: { petsName: pett, issue: iss },
@@ -120,10 +120,10 @@ const Home = () => {
   ];
   const Today = new Date().getMinutes();
 
-  console.log(Today);
+  // console.log(Today);
   useEffect(() => {
     const IntervalInsideFunc = () => {
-      console.log("called");
+      // console.log("called");
       const today = new Date();
       const midnight = new Date();
       const DayArr = today.getDay();
@@ -131,7 +131,7 @@ const Home = () => {
       midnight.setHours(16, 53, 0, 0);
 
       const GetminDiff = midnight.getMinutes() - today.getMinutes();
-      console.log(GetminDiff, "o");
+      // console.log(GetminDiff, "o");
 
       if (GetminDiff <= 0) dispatch(ResetDayData12(weekdayNames[DayArr]));
     };
@@ -149,9 +149,9 @@ const Home = () => {
       const today = new Date(); // E.g., Today is 2024-12-25
       const nextWeek = new Date(today);
 
-      console.log(today);
+      // console.log(today);
       nextWeek.setDate(today.getDate() + 6); // E.g., Next week is 2024-01-01
-      console.log(nextWeek);
+      // console.log(nextWeek);
 
       setMinDate(formatDate(today)); // minDate: "2024-12-25"
       setMaxDate(formatDate(nextWeek)); // maxDate: "2024-01-01"
@@ -175,12 +175,12 @@ const Home = () => {
   const handleValidation = async () => {
     // Trigger validation for all fields
     const isValid = await trigger();
-    console.log("Validation status:", isValid);
+    // console.log("Validation status:", isValid);
 
     if (isValid) {
       setshowtime(false);
     } else {
-      console.log("Validation errors:", errors);
+      // console.log("Validation errors:", errors);
       seteditbook(false);
     }
   };
@@ -260,14 +260,13 @@ const Home = () => {
                             type="button"
                             // disabled={abc.active}
                             disabled={abc.active || !TimeSelected}
-                            className={`p-4 ${
-                              abc.active
-                                ? "bg-gray-400 text-gray-700 cursor-not-allowed"
-                                : "bg-blue-500 text-white hover:bg-blue-600"
-                            } `}
+                            className={`p-4 ${abc.active
+                              ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                              : "bg-blue-500 text-white hover:bg-blue-600"
+                              } `}
                             onClick={() => {
                               setTimeClicked(abc.t);
-                              console.log("clicked");
+                              // console.log("clicked");
                               // setTimeSelected(abc.t);
                             }}
                             key={abc.t}
@@ -319,7 +318,7 @@ const Home = () => {
                               dispatch(clicked(paramsid));
                               seteditbook(false);
 
-                              console.log("clicked");
+                              // console.log("clicked");
                             }}
                           >
                             edit details
@@ -369,8 +368,9 @@ const Home = () => {
                   <div>
                     <Modal
                       mail={paramsid}
+                      bookedTime={btkk}
 
-                      // TimeClicked= {TimeClicked}
+                    // TimeClicked= {TimeClicked}
                     >
                       Cancel
                     </Modal>

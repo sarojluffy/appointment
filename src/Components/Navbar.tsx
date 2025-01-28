@@ -52,11 +52,15 @@ const Navbar = () => {
           {/* right nav */}
 
           <div className="w-full flex ml-3">
+
+
+
+
             <div className="  items-center  w-full   justify-center gap-6 whitespace-nowrap hidden md:flex ">
-              <div className="cursor-pointer">Our Services</div>
-              <div>Book Slots</div>
-              <div>Pricing</div>
-              <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.1 }}>
+              <div className="hover:text-primary cursor-pointer">Our Services</div>
+              <div className="hhover:text-primary ">Book Slots</div>
+              <div className="hover:text-primary ">Pricing</div>
+              <motion.div className="hover:text-primary " >
                 {" "}
                 Contact Us
               </motion.div>
@@ -74,7 +78,7 @@ const Navbar = () => {
                     <RiArrowDropDownLine
                       size={25}
                       className=" transform transition-transform group-hover:-rotate-180 ease-in-out duration-100 "
-                      // className=" transform transition-transform duration-300 ease-in-out group-hover:-rotate-180"
+                    // className=" transform transition-transform duration-300 ease-in-out group-hover:-rotate-180"
                     />
 
                     <div className="absolute bg-red-200 -bottom-2 w-full left-0 bg-transparent h-2"></div>
@@ -111,7 +115,7 @@ const Navbar = () => {
                       Get Started
                     </motion.button>
                   </div> */}
-                  <motion.div whileTap={{ scale: 0.9 }}>
+                  <motion.div >
                     <button className={`${blue} hidden md:block`}>
                       Get Started
                     </button>
@@ -157,6 +161,28 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      {isToogle ? <>
+
+        <motion.div
+          initial={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }} // Fully hidden from the top
+          animate={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}   // Fully revealed to the bottom
+          transition={{ duration: 0.5, ease: "easeOut" }}           // Smooth reveal
+          className="w-5/6 mx-auto flex items-center justify-center mt-8 bg-blue-500 p-8 rounded-lg shadow-lg"
+        >
+          <div className="flex flex-col gap-6 text-white">
+            <div className="text-lg font-bold">Our Services</div>
+            <div className="text-lg font-bold">Book Slots</div>
+            <div className="text-lg font-bold">Pricing</div>
+            <div className="text-lg font-bold">Contact Us</div>
+          </div>
+        </motion.div>
+
+
+
+
+
+
+      </> : <></>}
     </>
   );
 };

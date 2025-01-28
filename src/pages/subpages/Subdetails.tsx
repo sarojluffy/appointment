@@ -14,7 +14,7 @@ const Subdetails = () => {
 
   const navigate = useNavigate();
 
-  console.log(details);
+  // console.log(details);
 
   return (
     <>

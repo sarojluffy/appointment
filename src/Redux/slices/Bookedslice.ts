@@ -34,7 +34,7 @@ export const BookedSlice = createSlice({
       }
     },
     addbooked: (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       const em = action.payload.paramsid;
       const pe = action.payload.petsName;
       const is = action.payload.issue;
@@ -43,7 +43,7 @@ export const BookedSlice = createSlice({
       const btk = action.payload.bookedtime;
       const date = new Date(dt);
 
-      console.log(date.getDay());
+      // console.log(date.getDay());
 
       const objectData = state.bookedpeople.find((abc) => abc.email === em);
 
@@ -67,7 +67,7 @@ export const BookedSlice = createSlice({
     },
 
     historybooked: (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       const em = action.payload.paramsid;
       const pe = action.payload.petsName;
       const is = action.payload.issue;
@@ -76,7 +76,7 @@ export const BookedSlice = createSlice({
       const btk = action.payload.bookedtime;
       const date = new Date(dt);
 
-      console.log(date.getDay());
+      // console.log(date.getDay());
 
       const objectData = state.Bookedhistory.find((abc) => abc.email === em);
 
@@ -90,7 +90,7 @@ export const BookedSlice = createSlice({
           bookedtime: btk,
         });
       } else {
-        alert("cant add");
+        // alert("cant add");
       }
     },
 
@@ -103,7 +103,7 @@ export const BookedSlice = createSlice({
           .replace(/\s/g, "")
           .includes(searchedkey.toLowerCase().replace(/\s/g, ""))
       );
-      console.log(searchedkey);
+      // console.log(searchedkey);
     },
 
     deletebooked: (state, action) => {
@@ -115,10 +115,10 @@ export const BookedSlice = createSlice({
     },
 
     cancelbooked: (state, action) => {
-      console.log(action.payload, "ko");
+      // console.log(action.payload, "ko");
       const em = action.payload;
       state.bookedpeople = state.bookedpeople.filter((abc) => abc.email != em);
-      console.log(state.bookedpeople);
+      // console.log(state.bookedpeople);
     },
 
     // canceledUsers: (state, action) => {

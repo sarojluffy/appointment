@@ -33,72 +33,87 @@ const Adminlogin = () => {
     const emailVAl = selector.find((abc) => abc.email === data.email);
     const pwVAl = selector.find((abc) => abc.password === data.password);
 
-    console.log(emailVAl);
+    // console.log(emailVAl);
 
     if (emailVAl && pwVAl) {
-      console.log(emailVAl);
+      // console.log(emailVAl);
       // setautheticatedadmin(true);
       dispatch(adminlogged(true));
       navigate("/homeadmin", { replace: true });
     } else {
-      console.log("not found");
+      // console.log("not found");
     }
   };
 
-  const onError = () => {};
+  const onError = () => { };
 
   return (
     <>
       <div className="w-full h-full">
-        <div className="w-5/6 mx-auto mt-32">
-          <form
-            className={`${Outsideborder} flex flex-col w-2/4 mx-auto p-3`}
-            noValidate
-            onSubmit={handleSubmit(submitt, onError)}
-          >
-            <label htmlFor="email">email</label>
-            <input
-              className={`${borderL}`}
-              type="text"
-              {...register("email", {
-                required: { value: true, message: "Can't be empty" }, //value defines if the validation is on or off
-                pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, ///this is a different value
-                  message: "Invalid format",
-                },
-              })}
-            ></input>
-            <p className="text-red-400">{errors.email?.message}</p>
+        <div className="w-5/6 mx-auto mt-32 pb-8">
 
-            <label htmlFor="password">password</label>
-            <input
-              className={`${borderL}`}
-              type="password"
-              {...register("password", {
-                required: { value: true, message: "cant be empty" },
-              })}
-            ></input>
+          <div className="w-3/4 mx-auto">
 
-            <p className="text-red-400">{errors.password?.message}</p>
-            <div className="flex justify-center">
-              <button type="submit" className={`${blue} my-3`}>
-                Login
-              </button>
-            </div>
-          </form>
+            <h1 className="  my-2 ml-3"> <span className="text-2xl font-semibold">Sign in</span>  </h1>
+
+            <form
+              className="flex flex-col  p-3 shadow-md"
+              noValidate
+              onSubmit={handleSubmit(submitt, onError)}
+            >
+              <label htmlFor="email"></label>
+              <input
+                placeholder="Email"
+                className={`${borderL} px-2 py-1 text-sm`}
+
+                type="text"
+                {...register("email", {
+                  required: { value: true, message: "Can't be empty" }, //value defines if the validation is on or off
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, ///this is a different value
+                    message: "Invalid format",
+                  },
+                })}
+              ></input>
+              <p className="text-red-600 text-xs my-2 h-[20px]">{errors.email?.message}</p>
+
+              <label htmlFor="password"></label>
+              <input
+                placeholder="Password"
+                className={`${borderL} px-2 py-1 text-sm`}
+
+                type="password"
+                {...register("password", {
+                  required: { value: true, message: "cant be empty" },
+                })}
+              ></input>
+
+              <p className="text-red-600 text-xs my-2 h-[20px]">{errors.password?.message}</p>
+              <div className="flex justify-center mt-3">
+                <button type="submit" className={`${blue} mt-5 w-full`}>
+                  Login
+                </button>
+              </div>
+            </form>
+
+          </div>
+
+
 
           <DevTool control={control} />
-          <div className="flex justify-center pt-5">
-            <button
-              type="submit"
-              className={`${green}`}
-              onClick={() => {
-                navigate("/registeradmin");
-              }}
-            >
-              Signup as admin
-            </button>
-          </div>
+
+        </div>
+        <div className="flex justify-center  space-x-3 items-center">
+
+          <p className="text-xs">create a new account</p>
+          <button
+            className=" underline text-xs text-primary"
+            onClick={() => {
+              navigate("/registeradmin");
+            }}
+          >
+            signup
+          </button>
         </div>
       </div>
     </>

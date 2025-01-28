@@ -8,10 +8,12 @@ import Typography from "@mui/material/Typography";
 import { blue, red } from "../shared/Buttonstyle";
 import { useDispatch } from "react-redux";
 import { cancelbooked } from "../Redux/slices/Bookedslice";
+import { SetFalse } from "../Redux/slices/AppointmentSlice";
 
 type props = {
   children: React.ReactNode;
   mail: string | undefined;
+  bookedTime: string | undefined
 };
 
 const style = {
@@ -26,8 +28,8 @@ const style = {
   p: 4,
 };
 
-export default function TransitionsModal({ children, mail }: props) {
-  console.log(mail, "ok");
+export default function TransitionsModal({ children, mail, bookedTime }: props) {
+  // console.log(mail, "ok");
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -35,6 +37,8 @@ export default function TransitionsModal({ children, mail }: props) {
   const confirmM = () => {
     // await dispatch(canceledUsers(mail));
     dispatch(cancelbooked(mail));
+
+    dispatch(SetFalse(bookedTime))
     handleClose();
     // window.location.reload();
   };

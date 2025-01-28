@@ -49,59 +49,70 @@ const Login = () => {
     }
   };
 
-  const onError = () => {};
+  const onError = () => { };
 
   return (
     <>
       <div className="w-full h-full">
         <div className="w-5/6 mx-auto mt-32 pb-8">
-          <form
-            className="flex flex-col w-2/4 mx-auto border-[1px] border-slate-400 p-3 "
-            noValidate
-            onSubmit={handleSubmit(submitt, onError)}
-          >
-            <p className="text-red-400">{emailval}</p>
 
-            <label htmlFor="email">email</label>
-            <input
-              className={`${borderL}`}
-              type="text"
-              {...register("email", {
-                required: { value: true, message: "Can't be empty" }, //value defines if the validation is on or off
-                pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, ///this is a different value
-                  message: "Invalid format",
-                },
-              })}
-            ></input>
-            <p className="text-red-400">{errors.email?.message}</p>
+          <div className="w-3/4 mx-auto">
+            <h1 className="  my-2 ml-3"> <span className="text-2xl font-semibold">Sign in</span>  </h1>
+            <form
+              className="flex flex-col  p-3 shadow-md"
+              noValidate
+              onSubmit={handleSubmit(submitt, onError)}
+            >
 
-            <label htmlFor="password">password</label>
-            <input
-              className={`${borderL}`}
-              type="password"
-              {...register("password", {
-                required: { value: true, message: "cant be empty" },
-              })}
-            ></input>
+              <label htmlFor="email"></label>
+              <input placeholder="Email"
+                className={`${borderL} px-2 py-1 text-sm`}
+                type="text"
+                {...register("email", {
+                  required: { value: true, message: "Can't be empty" }, //value defines if the validation is on or off
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, ///this is a different value
+                    message: "Invalid format",
+                  },
+                })}
+              ></input>
+              <p className="text-red-600 text-xs my-2 h-[20px]">{errors.email?.message}</p>
 
-            <p className="text-red-400">{errors.password?.message}</p>
-            <div className="flex justify-center mt-3">
-              <button type="submit" className={`${blue}`}>
-                Login
-              </button>
-            </div>
-          </form>
+              <label htmlFor="password"></label>
+              <input
+                placeholder="Password"
+                className={`${borderL} px-2 py-1 text-sm`}
+                type="password"
+                {...register("password", {
+                  required: { value: true, message: "cant be empty" },
+                })}
+              ></input>
+
+              <p className="text-red-600 text-xs my-2 h-[20px]">{errors.password?.message}</p>
+
+              <p className="text-red-600 text-xs ">{emailval}</p>
+
+              <div className="flex justify-center ">
+                <button type="submit" className={`${blue} mt-5 w-full`}>
+                  Login
+                </button>
+              </div>
+            </form>
+          </div>
+
+
           <DevTool control={control} />
         </div>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center  space-x-3 items-center">
+
+          <p className="text-xs">create a new account</p>
           <button
-            className={`${green}`}
+            className=" underline text-xs text-primary"
             onClick={() => {
               navigate("/register");
             }}
           >
-            signup as User
+            signup
           </button>
         </div>
       </div>

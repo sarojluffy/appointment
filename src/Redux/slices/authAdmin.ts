@@ -22,7 +22,7 @@ export const authadminSlice = createSlice({
       const objectData = state.existingadmins.find((abc) => abc.email === em);
 
       if (objectData) {
-        console.log("already exists");
+        // console.log("already exists");
       } else {
         state.existingadmins.push({
           email: em,

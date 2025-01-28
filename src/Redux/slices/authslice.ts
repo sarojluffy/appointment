@@ -22,7 +22,7 @@ export const authSlice = createSlice({
       const objectData = state.existing.find((abc) => abc.email === em);
 
       if (objectData) {
-        console.log("already exists");
+        // console.log("already exists");
       } else {
         state.existing.push({
           email: em,

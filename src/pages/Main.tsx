@@ -7,7 +7,7 @@ const Main = () => {
     <>
       <div className="w-full">
         <Navbar />
-        <div className="w-5/6 mx-auto mt-32 space-x-5">
+        {/* <div className="w-5/6 mx-auto mt-32 space-x-5">
           <div className="py-7">Login as</div>
 
           <button
@@ -26,7 +26,7 @@ const Main = () => {
           >
             Admin
           </button>
-        </div>
+        </div> */}
       </div>
     </>
   );
