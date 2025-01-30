@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Getday, ResetDayData12 } from "../Redux/slices/AppointmentSlice";
 import { SetTrue } from "../Redux/slices/AppointmentSlice";
 import Modal from "./Modal";
+import About from "../Components/About";
 
 type Props = {
   petsName: string;

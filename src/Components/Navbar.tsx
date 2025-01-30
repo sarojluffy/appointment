@@ -5,9 +5,11 @@ import { blue } from "../shared/Buttonstyle";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { RxCross2 } from "react-icons/rx";
-import { duration } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+
+  const navigate = useNavigate()
   const [isHovered, setIshovered] = useState<boolean>(false);
   const [isToogle, setIstoogle] = useState<boolean>(false);
 
@@ -42,8 +44,8 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="w-full flex justify-between">
-        <div className="w-5/6 mx-auto py-4 flex justify-between items-center max-w-7xl  shadow-md px-3 rounded-md">
+      <div className="w-full flex justify-between fixed top-0 ">
+        <div className="w-5/6 mx-auto py-4 flex justify-between items-center max-w-7xl  shadow-md px-3 rounded-md bg-blue-200">
           {/* left nav */}
           <div className="">
             <h1 className="text-3xl font-semibold">PeTiFY</h1>
@@ -70,7 +72,8 @@ const Navbar = () => {
               <div className="flex justify-end items-center  gap-5 ">
                 <div className="flex items-center">
                   <motion.div
-                    className={`py-2 px-4 hidden md:flex rounded-md  cursor-pointer  hover:transition ease-in-out duration-300  items-center relative group hover:text-primary `}
+                    onClick={() => { navigate("/login") }}
+                    className={` py-2 px-4 hidden md:flex rounded-md  cursor-pointer  hover:transition ease-in-out duration-300  items-center relative group hover:text-primary `}
                     onMouseEnter={onEnter}
                     onMouseLeave={onExit}
                   >
@@ -85,6 +88,7 @@ const Navbar = () => {
                     {/* {LoginC ? <></> : <></>} */}
 
                     <motion.div
+                      onClick={() => { navigate("/loginadmin") }}
                       initial="exit"
                       animate={isHovered ? "enter" : "exit"}
                       variants={Animate}
@@ -116,7 +120,10 @@ const Navbar = () => {
                     </motion.button>
                   </div> */}
                   <motion.div >
-                    <button className={`${blue} hidden md:block`}>
+                    <button className={`${blue} hidden md:block`} onClick={() => {
+
+                      navigate("/login")
+                    }}>
                       Get Started
                     </button>
                   </motion.div>
@@ -161,28 +168,33 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      {isToogle ? <>
-
-        <motion.div
-          initial={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }} // Fully hidden from the top
-          animate={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}   // Fully revealed to the bottom
-          transition={{ duration: 0.5, ease: "easeOut" }}           // Smooth reveal
-          className="w-5/6 mx-auto flex items-center justify-center mt-8 bg-blue-500 p-8 rounded-lg shadow-lg"
-        >
-          <div className="flex flex-col gap-6 text-white">
-            <div className="text-lg font-bold">Our Services</div>
-            <div className="text-lg font-bold">Book Slots</div>
-            <div className="text-lg font-bold">Pricing</div>
-            <div className="text-lg font-bold">Contact Us</div>
-          </div>
-        </motion.div>
 
 
 
 
+      <AnimatePresence mode="wait">
+        {isToogle && (
+          <motion.div
+            key="ok"
+            initial={{ clipPath: "inset(0 0 100% 0)" }} // Start fully hidden (revealed from top)
+            animate={{ clipPath: "inset(0 0 0% 0)" }}   // Fully revealed
+            exit={{ clipPath: "inset(0 0 100% 0)" }}    // Exit by hiding from bottom
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="w-5/6 mx-auto flex items-center justify-center mt-0 bg-blue-200 p-8 rounded-lg shadow-lg md:hidden  fixed right-0 left-0"
+          >
+            <div className="flex flex-col gap-6 text-black">
+              <div className="text-md ">Our Services</div>
+              <div className="text-md ">Book Slots</div>
+              <div className="text-md ">Pricing</div>
+              <div className="text-md ">Contact Us</div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
 
-      </> : <></>}
+
+
     </>
   );
 };
