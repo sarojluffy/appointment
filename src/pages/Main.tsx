@@ -15,6 +15,7 @@ const Main = () => {
         <Getstarted />
 
         <About />
+        <About />
 
         <Footer />
       </div>
