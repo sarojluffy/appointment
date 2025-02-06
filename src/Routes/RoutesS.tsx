@@ -32,7 +32,7 @@ const RoutesS = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Main />}></Route>
+      <Route  path="/" element={<Main />}></Route>
 
       <Route
         path="/home/:id"

@@ -4,8 +4,8 @@ import RoutesS from "./Routes/RoutesS";
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <RoutesS />
+      <BrowserRouter >
+        <RoutesS  />
       </BrowserRouter>
     </>
   );
