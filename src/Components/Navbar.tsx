@@ -176,6 +176,8 @@ const Navbar = () => {
         {isToogle && (
           <motion.div
             key="ok"
+
+            {top right bottom left}
             initial={{ clipPath: "inset(0 0 100% 0)" }} // Start fully hidden (revealed from top)
             animate={{ clipPath: "inset(0 0 0% 0)" }}   // Fully revealed
             exit={{ clipPath: "inset(0 0 100% 0)" }}    // Exit by hiding from bottom
